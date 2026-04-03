@@ -28,6 +28,8 @@ async function fetchSheet(baseURL, cssFile) {
   return sheet;
 } // fetchSheet
 
+export function not (x) {return !x;}
+
 export class AcBase extends HTMLElement {
   async _initShadow(baseURL, htmlFile, cssFile, templateId) {
     const [template, sheet] = await Promise.all([

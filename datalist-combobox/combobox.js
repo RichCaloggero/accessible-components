@@ -1,5 +1,4 @@
-import { AcBase } from '../shared/base.js';
-import { not } from '../shared/not.js';
+import { AcBase, not } from '../shared/base.js';
 
 const BASE = new URL('.', import.meta.url);
 
