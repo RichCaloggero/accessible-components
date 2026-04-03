@@ -1,0 +1,76 @@
+/* Shared stylesheet adopted by both ac-tree and ac-tree-item shadow roots.
+   :host selectors scope each ruleset to the correct element. */
+
+/* === ac-tree === */
+
+:host(ac-tree) {
+  display: block;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.tree-label {
+  font-weight: var(--ac-tree-label-weight, bold);
+  margin-bottom: var(--ac-tree-label-gap, 0.25em);
+}
+
+.tree-label[hidden] {
+  display: none;
+}
+
+/* === ac-tree-item === */
+
+:host(ac-tree-item) {
+  display: block;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: var(--ac-tree-item-padding, 0.2em 0.4em);
+  padding-left: calc(var(--ac-tree-indent, 1.2em) * var(--ac-tree-level, 0));
+  cursor: default;
+  user-select: none;
+  border-radius: var(--ac-tree-item-radius, 2px);
+}
+
+.row:focus {
+  outline: var(--ac-tree-focus-outline, 2px solid #005fcc);
+  outline-offset: -1px;
+}
+
+.row[aria-selected="true"] {
+  background: var(--ac-tree-selected-bg, #005fcc);
+  color: var(--ac-tree-selected-color, #fff);
+}
+
+.indicator {
+  display: inline-block;
+  width: 1em;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+:host(ac-tree-item:not([data-has-children])) .indicator {
+  visibility: hidden;
+}
+
+:host(ac-tree-item[data-has-children]) .indicator::before {
+  content: '\25B6'; /* ▶ */
+  display: inline-block;
+  font-size: 0.6em;
+  transition: transform 0.15s ease;
+}
+
+:host(ac-tree-item[expanded]) .indicator::before {
+  transform: rotate(90deg);
+}
+
+.group[hidden] {
+  display: none;
+}
+
+:host(ac-tree-item[disabled]) .row {
+  opacity: 0.5;
+  pointer-events: none;
+}

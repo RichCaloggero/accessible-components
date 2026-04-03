@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datalist Combobox — Demo</title>
+  <script type="module" src="combobox.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 48em;
+      margin: 2em auto;
+      padding: 0 1em;
+      line-height: 1.5;
+      color: #222;
+    }
+    h1 { margin-bottom: 0.5em; }
+    h2 { margin-top: 2em; border-bottom: 1px solid #ccc; padding-bottom: 0.25em; }
+    section { margin-bottom: 2em; }
+    .demo { padding: 1em; border: 1px solid #e0e0e0; border-radius: 4px; }
+    .demo + .demo { margin-top: 1em; }
+    code { background: #f0f0f0; padding: 0.1em 0.3em; border-radius: 2px; font-size: 0.9em; }
+    .note {
+      margin-top: 1em;
+      padding: 0.75em 1em;
+      background: #f8f8f0;
+      border-left: 3px solid #996;
+      font-size: 0.9em;
+    }
+
+    .styled-combo {
+      --ac-combobox-border: 2px solid #336;
+      --ac-combobox-border-radius: 6px;
+      --ac-combobox-focus-outline: 2px solid #66a;
+    }
+  </style>
+</head>
+<body>
+  <h1>Datalist Combobox</h1>
+  <p>
+    A combobox implementation using the native <code>&lt;datalist&gt;</code> element.
+    The browser provides keyboard control, focus management, and filtering.
+    The component adds a live-region match count for screen readers.
+  </p>
+  <p><a href="../index.html">&larr; Back to main demos</a></p>
+
+  <h2>Demos</h2>
+
+  <section>
+    <h3>Basic &mdash; built-in label (above)</h3>
+    <div class="demo">
+      <ac-combobox label="Favorite fruit">
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="cherry">Cherry</option>
+        <option value="grape">Grape</option>
+        <option value="mango">Mango</option>
+        <option value="orange">Orange</option>
+        <option value="peach">Peach</option>
+        <option value="strawberry">Strawberry</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>Label position &mdash; left</h3>
+    <div class="demo">
+      <ac-combobox label="Country" label-position="left">
+        <option value="ca">Canada</option>
+        <option value="fr">France</option>
+        <option value="de">Germany</option>
+        <option value="jp">Japan</option>
+        <option value="uk">United Kingdom</option>
+        <option value="us">United States</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>External label via <code>label-id</code></h3>
+    <div class="demo">
+      <label id="ext-label">Pick a color</label>
+      <ac-combobox label-id="ext-label">
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="yellow">Yellow</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>Screen reader&ndash;only label (<code>aria-label</code>)</h3>
+    <div class="demo">
+      <ac-combobox aria-label="Search cities">
+        <option value="berlin">Berlin</option>
+        <option value="london">London</option>
+        <option value="paris">Paris</option>
+        <option value="tokyo">Tokyo</option>
+        <option value="new-york">New York</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>Custom status timeout (3 seconds)</h3>
+    <div class="demo">
+      <ac-combobox label="Programming language" status-timeout="3">
+        <option value="js">JavaScript</option>
+        <option value="py">Python</option>
+        <option value="rs">Rust</option>
+        <option value="go">Go</option>
+        <option value="ts">TypeScript</option>
+        <option value="java">Java</option>
+        <option value="cs">C#</option>
+        <option value="rb">Ruby</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>Custom styled</h3>
+    <div class="demo">
+      <ac-combobox class="styled-combo" label="Theme">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="auto">System default</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <div class="note">
+    <strong>How it works:</strong> Type into any input above to see the browser's native datalist filtering.
+    A screen reader will hear a match count announced via the <code>role="status"</code> live region
+    (e.g., "3 items found."). The message clears after the configured timeout (default 7 seconds).
+  </div>
+</body>
+</html>

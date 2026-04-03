@@ -1,0 +1,77 @@
+:host {
+  display: inline-block;
+  position: relative;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+:host([disabled]) {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ac-combobox-gap, 0.25em);
+}
+
+/* Label positions */
+:host([label-position="below"]) .wrapper {
+  flex-direction: column-reverse;
+}
+
+:host([label-position="left"]) .wrapper {
+  flex-direction: row;
+  align-items: center;
+}
+
+:host([label-position="right"]) .wrapper {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.label {
+  font-weight: var(--ac-combobox-label-weight, normal);
+  color: var(--ac-combobox-label-color, inherit);
+}
+
+.label[hidden] {
+  display: none;
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  border: var(--ac-combobox-border, 1px solid #767676);
+  border-radius: var(--ac-combobox-border-radius, 2px);
+  background: var(--ac-combobox-bg, #fff);
+}
+
+.input-wrap:focus-within {
+  outline: var(--ac-combobox-focus-outline, 2px solid #005fcc);
+  outline-offset: var(--ac-combobox-focus-outline-offset, 1px);
+}
+
+[part="input"] {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: var(--ac-combobox-input-padding, 0.4em 0.5em);
+  font: inherit;
+  background: transparent;
+  min-width: 0;
+}
+
+/* Visually hidden but accessible to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

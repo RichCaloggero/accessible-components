@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessible Components — Demo</title>
+  <script type="module" src="combobox/combobox.js"></script>
+  <script type="module" src="tree/tree.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 48em;
+      margin: 2em auto;
+      padding: 0 1em;
+      line-height: 1.5;
+      color: #222;
+    }
+    h1 { margin-bottom: 0.5em; }
+    h2 { margin-top: 2em; border-bottom: 1px solid #ccc; padding-bottom: 0.25em; }
+    section { margin-bottom: 2em; }
+    .demo { padding: 1em; border: 1px solid #e0e0e0; border-radius: 4px; }
+    .demo + .demo { margin-top: 1em; }
+    code { background: #f0f0f0; padding: 0.1em 0.3em; border-radius: 2px; font-size: 0.9em; }
+
+    /* Custom styling examples via ::part and custom properties */
+    .styled-combo {
+      --ac-combobox-border: 2px solid #336;
+      --ac-combobox-border-radius: 6px;
+      --ac-combobox-focus-outline: 2px solid #66a;
+      --ac-combobox-active-bg: #336;
+    }
+
+    .styled-tree {
+      --ac-tree-focus-outline: 2px solid #393;
+      --ac-tree-selected-bg: #393;
+      --ac-tree-indent: 1.5em;
+    }
+
+    .live-value {
+      margin-top: 0.5em;
+      font-size: 0.85em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Accessible Components</h1>
+  <p>Vanilla web components with full keyboard and screen reader support. No build step.</p>
+
+  <!-- ===== Combobox demos ===== -->
+  <h2>Combobox</h2>
+
+  <section>
+    <h3>Basic — built-in label (above)</h3>
+    <div class="demo">
+      <ac-combobox label="Favorite fruit" autocomplete="list">
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="cherry">Cherry</option>
+        <option value="grape">Grape</option>
+        <option value="mango">Mango</option>
+        <option value="orange">Orange</option>
+        <option value="peach">Peach</option>
+        <option value="strawberry">Strawberry</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>Label position — left</h3>
+    <div class="demo">
+      <ac-combobox label="Country" label-position="left" autocomplete="list">
+        <option value="ca">Canada</option>
+        <option value="fr">France</option>
+        <option value="de">Germany</option>
+        <option value="jp">Japan</option>
+        <option value="uk">United Kingdom</option>
+        <option value="us">United States</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>Read-only (select-only)</h3>
+    <div class="demo">
+      <ac-combobox label="Priority" readonly>
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+        <option value="critical">Critical</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>External label via <code>label-id</code></h3>
+    <div class="demo">
+      <label id="ext-label">Pick a color</label>
+      <ac-combobox label-id="ext-label">
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="yellow">Yellow</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>Screen reader–only label (<code>aria-label</code>)</h3>
+    <div class="demo">
+      <ac-combobox aria-label="Search cities" autocomplete="both">
+        <option value="berlin">Berlin</option>
+        <option value="london">London</option>
+        <option value="paris">Paris</option>
+        <option value="tokyo">Tokyo</option>
+        <option value="new-york">New York</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <section>
+    <h3>Custom styled</h3>
+    <div class="demo">
+      <ac-combobox class="styled-combo" label="Theme" autocomplete="list">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="auto">System default</option>
+      </ac-combobox>
+    </div>
+  </section>
+
+  <!-- Live region for value announcements -->
+  <div id="live-status" class="live-value" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ===== Tree demos ===== -->
+  <h2>Tree View</h2>
+
+  <section>
+    <h3>Basic tree — built-in label</h3>
+    <div class="demo">
+      <ac-tree label="Project files">
+        <ac-tree-item label="src/" expanded>
+          <ac-tree-item label="index.js"></ac-tree-item>
+          <ac-tree-item label="components/" expanded>
+            <ac-tree-item label="header.js"></ac-tree-item>
+            <ac-tree-item label="footer.js"></ac-tree-item>
+            <ac-tree-item label="sidebar.js"></ac-tree-item>
+          </ac-tree-item>
+          <ac-tree-item label="utils/">
+            <ac-tree-item label="helpers.js"></ac-tree-item>
+            <ac-tree-item label="format.js"></ac-tree-item>
+          </ac-tree-item>
+        </ac-tree-item>
+        <ac-tree-item label="package.json"></ac-tree-item>
+        <ac-tree-item label="README.md"></ac-tree-item>
+      </ac-tree>
+    </div>
+  </section>
+
+  <section>
+    <h3>Auto-open tree (expand + descend in one keystroke)</h3>
+    <div class="demo">
+      <ac-tree label="Navigation" auto-open>
+        <ac-tree-item label="Home"></ac-tree-item>
+        <ac-tree-item label="Products">
+          <ac-tree-item label="Software">
+            <ac-tree-item label="Desktop"></ac-tree-item>
+            <ac-tree-item label="Mobile"></ac-tree-item>
+          </ac-tree-item>
+          <ac-tree-item label="Hardware"></ac-tree-item>
+        </ac-tree-item>
+        <ac-tree-item label="About"></ac-tree-item>
+        <ac-tree-item label="Contact"></ac-tree-item>
+      </ac-tree>
+    </div>
+  </section>
+
+  <section>
+    <h3>Multi-select tree</h3>
+    <div class="demo">
+      <ac-tree label="Select files to delete" multiselectable>
+        <ac-tree-item label="old-backup.zip"></ac-tree-item>
+        <ac-tree-item label="temp/" expanded>
+          <ac-tree-item label="cache.tmp"></ac-tree-item>
+          <ac-tree-item label="session.dat"></ac-tree-item>
+        </ac-tree-item>
+        <ac-tree-item label="notes.txt"></ac-tree-item>
+      </ac-tree>
+    </div>
+  </section>
+
+  <section>
+    <h3>External label via heading</h3>
+    <div class="demo">
+      <h4 id="tree-heading">Document outline</h4>
+      <ac-tree label-id="tree-heading">
+        <ac-tree-item label="Introduction"></ac-tree-item>
+        <ac-tree-item label="Chapter 1" expanded>
+          <ac-tree-item label="Section 1.1"></ac-tree-item>
+          <ac-tree-item label="Section 1.2"></ac-tree-item>
+        </ac-tree-item>
+        <ac-tree-item label="Chapter 2">
+          <ac-tree-item label="Section 2.1"></ac-tree-item>
+        </ac-tree-item>
+        <ac-tree-item label="Conclusion"></ac-tree-item>
+      </ac-tree>
+    </div>
+  </section>
+
+  <section>
+    <h3>Custom styled</h3>
+    <div class="demo">
+      <ac-tree class="styled-tree" label="Eco items">
+        <ac-tree-item label="Plants" expanded>
+          <ac-tree-item label="Fern"></ac-tree-item>
+          <ac-tree-item label="Oak"></ac-tree-item>
+          <ac-tree-item label="Moss"></ac-tree-item>
+        </ac-tree-item>
+        <ac-tree-item label="Animals">
+          <ac-tree-item label="Fox"></ac-tree-item>
+          <ac-tree-item label="Owl"></ac-tree-item>
+        </ac-tree-item>
+      </ac-tree>
+    </div>
+  </section>
+
+  <script type="module">
+    const liveRegion = document.getElementById('live-status');
+
+    document.addEventListener('ac-select', e => {
+      const combo = e.target.closest('ac-combobox');
+      if (combo) {
+        const name = combo.getAttribute('label')
+          || combo.getAttribute('aria-label')
+          || 'Combobox';
+        liveRegion.textContent = `${name}: selected "${e.detail.label}" (value: ${e.detail.value})`;
+        return;
+      }
+
+      /*const tree = e.target.closest('ac-tree');
+      if (tree) {
+        const name = tree.getAttribute('label')
+          || tree.getAttribute('aria-label')
+          || 'Tree';
+        const val = tree.value;
+        const display = Array.isArray(val) ? JSON.stringify(val) : val;
+        liveRegion.textContent = `${name}: value = ${display}`;
+      }
+    });
+
+    document.addEventListener('ac-activate', e => {
+      const tree = e.target.closest('ac-tree');
+      if (!tree) return;
+      const name = tree.getAttribute('label')
+        || tree.getAttribute('aria-label')
+        || 'Tree';
+      liveRegion.textContent = `${name}: value = ${tree.value}`;
+    */
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<template id="ac-tree">
+  <div part="label" id="label" class="label" hidden></div>
+  <div part="tree" id="tree" role="tree">
+    <slot></slot>
+  </div>
+</template>
+
+<template id="ac-tree-item">
+  <div part="row" class="row" role="treeitem" tabindex="-1">
+    <span part="indicator" class="indicator" aria-hidden="true"></span>
+    <span part="label" class="item-label" id="item-label"></span>
+  </div>
+  <div part="group" class="group" role="group" hidden>
+    <slot></slot>
+  </div>
+</template>

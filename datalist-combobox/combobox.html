@@ -1,0 +1,32 @@
+<template>
+  <div part="wrapper" class="wrapper">
+    <label part="label" id="label" class="label" hidden></label>
+    <div class="input-wrap">
+      <input part="input" id="input"
+        role="combobox"
+        aria-expanded="false"
+        list="listbox"
+        aria-autocomplete="none"
+        autocomplete="off" />
+      <button part="toggle" id="toggle"
+        type="button"
+        tabindex="-1"
+        aria-label="Toggle options"
+        aria-expanded="false"
+        aria-controls="listbox"
+        aria-hidden="true"
+		hidden>
+        <span >&#x25BC;</span>
+      </button>
+    </div>
+    <datalist part="listbox" id="listbox"
+      tabindex="-1"
+      hidden>
+      <!-- Options are rendered here as <option> mirrored from light DOM <option> elements -->
+    </datalist>
+  
+  <div role="status" id="status" class="visually-hidden"></div>
+  </div>
+  <!-- Hidden slot: light DOM <option> children are data source only, not displayed -->
+  <div hidden><slot></slot></div>
+</template>
