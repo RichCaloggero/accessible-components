@@ -22,6 +22,7 @@ export class AcCombobox extends AcBase {
   #statusEl;
   #statusTimer = null;
   #ready;
+  #toggle;
 
   constructor() {
     super();
@@ -35,9 +36,17 @@ export class AcCombobox extends AcBase {
     this.#datalist = shadow.getElementById('listbox');
     this.#labelEl = shadow.getElementById('label');
     this.#statusEl = shadow.getElementById('status');
+    this.#toggle = shadow.getElementById('toggle');
 
     this.#input.addEventListener('input', () => this.#onInput());
-
+	  this.#input.addEventListener("focus", () => {
+		  this.#datalist.style.display = "block";
+		  this.#datalist.style.display = "none";
+	  }); // listener
+	  
+    this.#toggle.addEventListener('click', () => this.#toggleDatalist());
+    this.#toggle.addEventListener('mousedown', e => e.preventDefault());
+	  
     shadow.querySelector('slot').addEventListener('slotchange', () => this.#syncOptions());
 
     this.#syncOptions();
@@ -148,6 +157,10 @@ export class AcCombobox extends AcBase {
     this.#emit('ac-input', { value });
   } // #onInput
 
+  #toggleDatalist() {
+    this.#input.focus();
+  } // #toggleDatalist
+  
   // --- Match count reporting ---
 
   #reportMatchCount() {

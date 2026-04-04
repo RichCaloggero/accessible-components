@@ -61,6 +61,17 @@
   font: inherit;
   background: transparent;
   min-width: 0;
+  appearance: none;
+}
+
+[part="toggle"] {
+  border: none;
+  background: transparent;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+  color: inherit;
 }
 
 /* Visually hidden but accessible to screen readers */
