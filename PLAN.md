@@ -294,6 +294,14 @@ No build step. For development:
 - `npx serve .` or `python -m http.server` to serve files locally (needed because `fetch()` and ES modules require HTTP, not `file://`)
 - That's it. No npm install required for the library itself.
 
+### Deployment / Integrity
+
+Templates and stylesheets are fetched at runtime via `fetch()` relative to each component's `.js` file. Scripts inside `<template>` do not execute, but attributes such as `onmouseover` on cloned nodes *would* run if the fetched HTML were tampered with in transit. For that reason:
+
+- **Serve the library over HTTPS in any non-local environment.** Plain HTTP leaves the template fetch open to MITM attribute injection.
+- If hosting on a third-party CDN, prefer one that enforces HTTPS and consider pinning a specific version path so template contents can't be swapped under you.
+- The demo pages ship a CSP meta tag (`default-src 'self'`) as defense-in-depth; retain or tighten it when embedding.
+
 ---
 
 ## Order of Work

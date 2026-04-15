@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'">
   <title>Accessible Components — Demo</title>
   <script type="module" src="combobox/combobox.js"></script>
   <script type="module" src="tree/tree.js"></script>
@@ -230,34 +231,23 @@
 
     document.addEventListener('ac-select', e => {
       const combo = e.target.closest('ac-combobox');
-      if (combo) {
-        const name = combo.getAttribute('label')
-          || combo.getAttribute('aria-label')
-          || 'Combobox';
-        liveRegion.textContent = `${name}: selected "${e.detail.label}" (value: ${e.detail.value})`;
-        return;
-      }
-
-      /*const tree = e.target.closest('ac-tree');
-      if (tree) {
-        const name = tree.getAttribute('label')
-          || tree.getAttribute('aria-label')
-          || 'Tree';
-        const val = tree.value;
-        const display = Array.isArray(val) ? JSON.stringify(val) : val;
-        liveRegion.textContent = `${name}: value = ${display}`;
-      }
+      if (!combo) return;
+      const name = combo.getAttribute('label')
+        || combo.getAttribute('aria-label')
+        || 'Combobox';
+      liveRegion.textContent = `${name}: selected "${e.detail.label}" (value: ${e.detail.value})`;
     });
 
-    document.addEventListener('ac-activate', e => {
+    document.addEventListener('change', e => {
       const tree = e.target.closest('ac-tree');
       if (!tree) return;
       const name = tree.getAttribute('label')
         || tree.getAttribute('aria-label')
         || 'Tree';
-      liveRegion.textContent = `${name}: value = ${tree.value}`;
-    */
-      });
+      const val = tree.value;
+      const display = Array.isArray(val) ? JSON.stringify(val) : val;
+      liveRegion.textContent = `${name}: value = ${display}`;
+    });
   </script>
 </body>
 </html>

@@ -189,14 +189,21 @@ customElements.define('ac-combobox', AcCombobox);
 
 // --- Standalone helpers for use outside the web component ---
 
-export function reportMatchCount(e) {
+export function reportMatchCount(e, options = {}) {
   const $input = e.target;
-  const $list = document.getElementById($input.getAttribute('list'));
-  const $items = $list.querySelectorAll('option');
-  const value = $input.value;
-  const $status = document.querySelector("[role='status']");
+  if (!($input instanceof HTMLInputElement)) return;
 
-  const matches = [...$items].filter(item =>
+  const root = options.root ?? document;
+  const listId = $input.getAttribute('list');
+  if (!listId) return;
+  const $list = root.getElementById ? root.getElementById(listId) : document.getElementById(listId);
+  if (!($list instanceof HTMLDataListElement)) return;
+
+  const $status = options.status ?? root.querySelector?.("[role='status']") ?? document.querySelector("[role='status']");
+  if (!($status instanceof HTMLElement)) return;
+
+  const value = $input.value;
+  const matches = [...$list.querySelectorAll('option')].filter(item =>
     item.textContent.toLowerCase().includes(value.toLowerCase())
   );
 

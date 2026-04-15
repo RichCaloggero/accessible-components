@@ -2,10 +2,13 @@ const docCache = new Map();
 const sheetCache = new Map();
 
 async function fetchDoc(baseURL, htmlFile) {
-  const key = new URL(htmlFile, baseURL).href;
+  const url = new URL(htmlFile, baseURL);
+  const key = url.href;
   if (docCache.has(key)) return docCache.get(key);
 
-  const html = await fetch(new URL(htmlFile, baseURL)).then(r => r.text());
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch template ${key}: ${res.status} ${res.statusText}`);
+  const html = await res.text();
   const doc = new DOMParser().parseFromString(html, 'text/html');
   docCache.set(key, doc);
   return doc;
@@ -18,10 +21,13 @@ async function fetchTemplate(baseURL, htmlFile, templateId) {
 } // fetchTemplate
 
 async function fetchSheet(baseURL, cssFile) {
-  const key = new URL(cssFile, baseURL).href;
+  const url = new URL(cssFile, baseURL);
+  const key = url.href;
   if (sheetCache.has(key)) return sheetCache.get(key);
 
-  const css = await fetch(new URL(cssFile, baseURL)).then(r => r.text());
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch stylesheet ${key}: ${res.status} ${res.statusText}`);
+  const css = await res.text();
   const sheet = new CSSStyleSheet();
   sheet.replaceSync(css);
   sheetCache.set(key, sheet);
@@ -36,6 +42,7 @@ export class AcBase extends HTMLElement {
       fetchTemplate(baseURL, htmlFile, templateId),
       fetchSheet(baseURL, cssFile),
     ]);
+    if (!template) throw new Error(`Template ${templateId ?? '(default)'} not found in ${htmlFile}`);
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.adoptedStyleSheets = [sheet];
     shadow.appendChild(template.content.cloneNode(true));
